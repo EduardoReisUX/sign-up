@@ -3,7 +3,46 @@
 	export let value = '';
 	export let checked = false;
 
-	let seePassword = false;
+	const formatValues = (node: HTMLInputElement, formatFunction: (value: string) => string) => {
+		// Thank you very much, random svelte dev!
+		// https://svelte.dev/repl/5c1abf5d24c94960a267124662e11a8d?version=3.44.2
+
+		function updateValue(e) {
+			node.value = formatFunction(node.value);
+		}
+
+		node.addEventListener('input', updateValue);
+		node.addEventListener('paste', updateValue);
+
+		return {
+			destroy() {
+				node.removeEventListener('input', updateValue);
+				node.removeEventListener('paste', updateValue);
+			}
+		};
+	};
+
+	const FormattedCPF = (value: string) => {
+		const regex = /^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/g;
+		const onlyNumbers = value.replace(/[^\d]/g, '');
+
+		if (onlyNumbers.length > 9) {
+			return onlyNumbers.replace(regex, '$1.$2.$3.$4');
+		}
+
+		return onlyNumbers.replace(regex, (regex, $1, $2, $3, $4) =>
+			[$1, $2, $3, $4].filter((group) => !!group).join('.')
+		);
+	};
+
+	const FormattedDate = (value: string) => {
+		const regex = /^(\d{0,2})(\d{0,2})(\d{0,4})$/g;
+		const onlyNumbers = value.replace(/[^\d]/g, '');
+
+		return onlyNumbers.replace(regex, (regex, $1, $2, $3) =>
+			[$1, $2, $3].filter((group) => !!group).join('/')
+		);
+	};
 </script>
 
 {#if type === 'email'}
@@ -31,7 +70,8 @@
 			id="cpf"
 			placeholder="000.000.000-00"
 			required
-			maxlength="11"
+			maxlength="14"
+			use:formatValues={FormattedCPF}
 			bind:value
 		/>
 	</label>
@@ -47,7 +87,8 @@
 			id="birth"
 			placeholder="DD/MM/AAAA"
 			required
-			maxlength="8"
+			maxlength="10"
+			use:formatValues={FormattedDate}
 			bind:value
 		/>
 	</label>
