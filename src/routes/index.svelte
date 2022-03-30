@@ -12,6 +12,8 @@
 	import LeftWrapper from '$lib/LeftWrapper.svelte';
 	import Page from '$lib/Page.svelte';
 	import Input from '$lib/Input.svelte';
+	import Container from '$lib/Container.svelte';
+	import Toast from '$lib/Toast.svelte';
 
 	let inputValues = {
 		email: '',
@@ -22,6 +24,7 @@
 	};
 
 	let loading = false;
+	let showToast = false;
 
 	const handleSubmit = () => {
 		loading = true;
@@ -33,8 +36,14 @@
 
 		setTimeout(() => {
 			loading = false;
+
 			setTimeout(() => {
-				alert(JSON.stringify(data, null, 2));
+				showToast = true;
+				console.log(data); // send data to some database
+
+				setTimeout(() => {
+					showToast = false;
+				}, 5000); // show toast for 4 seconds
 			}, 400);
 		}, 450);
 	};
@@ -51,19 +60,21 @@
 	</LeftWrapper>
 
 	<RightWrapper>
-		<Header />
+		<Toast {showToast} />
 
-		<Main>
-			<Title />
-			<Form {loading} terms={inputValues.terms} {handleSubmit}>
-				<Input type="email" bind:value={inputValues.email} />
-				<Input type="cpf" bind:value={inputValues.cpf} />
-				<Input type="birth" bind:value={inputValues.birth} />
-				<Input type="password" bind:value={inputValues.password} />
-				<Input type="checkbox" bind:checked={inputValues.terms} />
-			</Form>
-		</Main>
-
-		<Footer />
+		<Container>
+			<Header />
+			<Main>
+				<Title />
+				<Form {loading} terms={inputValues.terms} {handleSubmit}>
+					<Input type="email" bind:value={inputValues.email} />
+					<Input type="cpf" bind:value={inputValues.cpf} />
+					<Input type="birth" bind:value={inputValues.birth} />
+					<Input type="password" bind:value={inputValues.password} />
+					<Input type="checkbox" bind:checked={inputValues.terms} />
+				</Form>
+			</Main>
+			<Footer />
+		</Container>
 	</RightWrapper>
 </Page>
