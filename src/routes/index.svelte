@@ -21,12 +21,28 @@
 		terms: false
 	};
 
-	$: maskCPF = inputValues.cpf && inputValues.cpf.replace(/(\d{3})/g, '•');
+	let loading = false;
 
-	let handleSubmit = () => {
-		alert(JSON.stringify(inputValues, null, 2));
+	const handleSubmit = () => {
+		loading = true;
+
+		const data = { ...inputValues };
+
+		data.cpf = data.cpf.replace(/[\.|-]/g, '');
+		data.birth = data.birth.replace(/[/]/g, '');
+
+		setTimeout(() => {
+			loading = false;
+			setTimeout(() => {
+				alert(JSON.stringify(data, null, 2));
+			}, 400);
+		}, 450);
 	};
 </script>
+
+<svelte:head>
+	<title>Criar meu cadastro | Bcredi</title>
+</svelte:head>
 
 <Page>
 	<LeftWrapper>
@@ -39,7 +55,7 @@
 
 		<Main>
 			<Title />
-			<Form terms={inputValues.terms} {handleSubmit}>
+			<Form {loading} terms={inputValues.terms} {handleSubmit}>
 				<Input type="email" bind:value={inputValues.email} />
 				<Input type="cpf" bind:value={inputValues.cpf} />
 				<Input type="birth" bind:value={inputValues.birth} />
