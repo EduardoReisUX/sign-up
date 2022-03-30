@@ -61,4 +61,19 @@ test.describe('index page', () => {
 		const button_not_disabled = await page.locator(button_xpath).isDisabled();
 		expect(button_not_disabled).toBe(false);
 	});
+
+	test('toast should appear after success signup', async ({ page }) => {
+		await page.locator('//input[@id="email"]').fill('test-email@gmail.com');
+		await page.locator('//input[@id="cpf"]').fill('01001000100');
+		await page.locator('//input[@id="birth"]').fill('22051995');
+		await page.locator('//input[@id="password"]').fill('test-password');
+		await page.locator('//input[@id="terms"]').click();
+
+		await page.locator('//button[@type="submit"]').click();
+
+		const toast = await page.waitForSelector('//span[@id="successToast"]');
+		const toast_visible = await toast.isVisible();
+
+		expect(toast_visible).toBe(true);
+	});
 });
