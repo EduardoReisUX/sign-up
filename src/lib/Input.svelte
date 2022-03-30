@@ -27,7 +27,7 @@
 		const onlyNumbers = value.replace(/[^\d]/g, '');
 
 		if (onlyNumbers.length > 9) {
-			return onlyNumbers.replace(regex, '$1.$2.$3.$4');
+			return onlyNumbers.replace(regex, '$1.$2.$3-$4');
 		}
 
 		return onlyNumbers.replace(regex, (regex, $1, $2, $3, $4) =>
@@ -46,7 +46,7 @@
 </script>
 
 {#if type === 'email'}
-	<label for="email" class="flex flex-col text-brand-warm-grey text-sm">
+	<label for="email" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
 		E-mail
 		<input
 			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
@@ -61,7 +61,7 @@
 {/if}
 
 {#if type === 'cpf'}
-	<label for="cpf" class="flex flex-col text-brand-warm-grey text-sm">
+	<label for="cpf" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
 		CPF
 		<input
 			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
@@ -78,7 +78,7 @@
 {/if}
 
 {#if type === 'birth'}
-	<label for="birth" class="flex flex-col text-brand-warm-grey text-sm">
+	<label for="birth" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
 		Data de nascimento
 		<input
 			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
@@ -95,7 +95,7 @@
 {/if}
 
 {#if type === 'password'}
-	<label for="password" class="flex flex-col text-brand-warm-grey text-sm">
+	<label for="password" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
 		Senha
 		<input
 			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
@@ -112,7 +112,7 @@
 
 {#if type === 'checkbox'}
 	<label
-		class="flex items-center gap-2 text-xs border border-brand-pinkish-grey rounded-sm p-4"
+		class="flex items-center gap-3 text-xs border border-brand-pinkish-grey rounded-sm p-4"
 		for="terms"
 	>
 		<input
