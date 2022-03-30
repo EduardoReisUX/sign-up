@@ -68,7 +68,7 @@
 			type="text"
 			name="cpf"
 			id="cpf"
-			placeholder="000.000.000-00"
+			placeholder="998.767.888-70"
 			required
 			maxlength="14"
 			use:formatValues={FormattedCPF}
@@ -85,7 +85,7 @@
 			type="text"
 			name="birth"
 			id="birth"
-			placeholder="DD/MM/AAAA"
+			placeholder="21/12/1990"
 			required
 			maxlength="10"
 			use:formatValues={FormattedDate}
@@ -102,7 +102,7 @@
 			type="password"
 			name="password"
 			id="password"
-			placeholder="Cadastre sua senha"
+			placeholder="Cadastre uma senha"
 			required
 			bind:value
 		/>

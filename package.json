@@ -8,6 +8,7 @@
 		"preview": "svelte-kit preview",
 		"prepare": "svelte-kit sync",
 		"test": "playwright test",
+		"test:e2e": "set PW_EXPERIMENTAL_TS_ESM=1&& npm run test",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
