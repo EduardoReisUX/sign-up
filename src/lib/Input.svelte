@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let type: 'email' | 'cpf' | 'birth' | 'password' | 'checkbox';
+	export let type: 'email' | 'cpf' | 'birthDate' | 'password' | 'checkbox';
 	export let value = '';
 	export let checked = false;
 
@@ -43,69 +43,90 @@
 			[$1, $2, $3].filter((group) => !!group).join('/')
 		);
 	};
+
+	let labelStyle = 'flex flex-col gap-2 text-brand-warm-grey text-sm';
+
+	$: inputStyle = `peer border border-brand-white-two rounded-sm p-4 text-brand-black 
+		placeholder:text-brand-pinkish-grey
+		focus:outline-none focus:border-brand-dodger-blue focus:ring-1 focus:ring-brandborder-brand-dodger-blue
+		${
+			!!value &&
+			'invalid:border-brand-coral-pink focus:invalid:border-brand-coral-pink focus:invalid:ring-brand-coral-pink'
+		}
+		`;
+
+	$: errorStyle = `hidden ${!!value && 'peer-invalid:block'} text-brand-coral-pink text-sm -mb-7`;
 </script>
 
 {#if type === 'email'}
-	<label for="email" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
+	<label for="email" class={labelStyle}>
 		E-mail
 		<input
-			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
+			class={inputStyle}
 			type="email"
 			name="email"
 			id="email"
 			placeholder="ana.maria@email.com"
-			required
 			bind:value
+			required
 		/>
+		<small class={errorStyle}>O endereço de email deve ser válido.</small>
 	</label>
 {/if}
 
 {#if type === 'cpf'}
-	<label for="cpf" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
+	<label for="cpf" class={labelStyle}>
 		CPF
 		<input
-			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
+			class={inputStyle}
 			type="text"
 			name="cpf"
 			id="cpf"
 			placeholder="998.767.888-70"
+			bind:value
 			required
 			maxlength="14"
+			pattern={'.{14}'}
 			use:formatValues={FormattedCPF}
-			bind:value
 		/>
+		<small class={errorStyle}>CPF deve conter 14 números</small>
 	</label>
 {/if}
 
-{#if type === 'birth'}
-	<label for="birth" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
+{#if type === 'birthDate'}
+	<label for="birthDate" class={labelStyle}>
 		Data de nascimento
 		<input
-			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
+			class={inputStyle}
 			type="text"
-			name="birth"
-			id="birth"
+			name="birthDate"
+			id="birthDate"
 			placeholder="21/12/1990"
+			bind:value
 			required
 			maxlength="10"
+			pattern={'.{10}'}
 			use:formatValues={FormattedDate}
-			bind:value
 		/>
+		<small class={errorStyle}>Data de nascimento deve conter 8 dígitos</small>
 	</label>
 {/if}
 
 {#if type === 'password'}
-	<label for="password" class="flex flex-col gap-2 text-brand-warm-grey text-sm">
+	<label for="password" class={labelStyle}>
 		Senha
 		<input
-			class="border border-brand-white-two rounded-sm p-4 text-brand-black placeholder:text-brand-pinkish-grey"
+			class={inputStyle}
 			type="password"
 			name="password"
 			id="password"
 			placeholder="Cadastre uma senha"
-			required
 			bind:value
+			required
+			minlength="6"
+			maxlength="40"
 		/>
+		<small class={errorStyle}>Senha deve ter entre 6 e 40 caracteres</small>
 		<!-- <img src={eye_open} alt="Ver senha" /> -->
 	</label>
 {/if}
@@ -115,15 +136,7 @@
 		class="flex items-center gap-3 text-xs border border-brand-pinkish-grey rounded-sm p-4"
 		for="terms"
 	>
-		<input
-			class=""
-			type="checkbox"
-			name="terms"
-			id="terms"
-			required
-			on:change={() => !checked}
-			bind:checked
-		/>
+		<input type="checkbox" name="terms" id="terms" required bind:checked />
 		<span class="text-brand-pinkish-grey"
 			>Li e estou de acordo com a
 			<a class="text-brand-dodger-blue" href="/">Política de Privacidade</a>

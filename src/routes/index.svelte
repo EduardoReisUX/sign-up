@@ -18,7 +18,7 @@
 	let inputValues = {
 		email: '',
 		cpf: '',
-		birth: '',
+		date: '',
 		password: '',
 		terms: false
 	};
@@ -32,7 +32,7 @@
 		const data = { ...inputValues };
 
 		data.cpf = data.cpf.replace(/[\.|-]/g, '');
-		data.birth = data.birth.replace(/[/]/g, '');
+		data.date = data.date.replace(/[/]/g, '');
 
 		setTimeout(() => {
 			loading = false;
@@ -45,7 +45,7 @@
 					showToast = false;
 				}, 5000); // show toast for 4 seconds
 			}, 400);
-		}, 450);
+		}, 1000); // 1 second of loading spinner
 	};
 </script>
 
@@ -69,7 +69,7 @@
 				<Form {loading} terms={inputValues.terms} {handleSubmit}>
 					<Input type="email" bind:value={inputValues.email} />
 					<Input type="cpf" bind:value={inputValues.cpf} />
-					<Input type="birth" bind:value={inputValues.birth} />
+					<Input type="birthDate" bind:value={inputValues.date} />
 					<Input type="password" bind:value={inputValues.password} />
 					<Input type="checkbox" bind:checked={inputValues.terms} />
 				</Form>

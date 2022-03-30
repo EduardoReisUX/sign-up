@@ -65,7 +65,7 @@ test.describe('index page', () => {
 	test('toast should appear after success signup', async ({ page }) => {
 		await page.locator('//input[@id="email"]').fill('test-email@gmail.com');
 		await page.locator('//input[@id="cpf"]').fill('01001000100');
-		await page.locator('//input[@id="birth"]').fill('22051995');
+		await page.locator('//input[@id="date"]').fill('22051995');
 		await page.locator('//input[@id="password"]').fill('test-password');
 		await page.locator('//input[@id="terms"]').click();
 
