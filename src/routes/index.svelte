@@ -51,6 +51,7 @@
 
 <svelte:head>
 	<title>Criar meu cadastro | Bcredi</title>
+	<meta name="description" content="Faça seu cadastro na Bcredi" />
 </svelte:head>
 
 <Page>
