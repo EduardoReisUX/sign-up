@@ -62,10 +62,23 @@ test.describe('index page', () => {
 		expect(button_not_disabled).toBe(false);
 	});
 
+	test('seePassword button shows/hides password input', async ({ page }) => {
+		const password_xpath = '//input[@id="password"]';
+		const password_visible_type = await page.locator(password_xpath).getAttribute('type');
+
+		expect(password_visible_type).toBe('password');
+
+		const seePassword_button_locator = '//button[@id="togglePassword"]';
+		await page.locator(seePassword_button_locator).click();
+
+		const password_hidden_type = await page.locator(password_xpath).getAttribute('type');
+		expect(password_hidden_type).toBe('text');
+	});
+
 	test('toast should appear after success signup', async ({ page }) => {
 		await page.locator('//input[@id="email"]').fill('test-email@gmail.com');
 		await page.locator('//input[@id="cpf"]').fill('01001000100');
-		await page.locator('//input[@id="date"]').fill('22051995');
+		await page.locator('//input[@id="birthDate"]').fill('22051995');
 		await page.locator('//input[@id="password"]').fill('test-password');
 		await page.locator('//input[@id="terms"]').click();
 
@@ -75,5 +88,30 @@ test.describe('index page', () => {
 		const toast_visible = await toast.isVisible();
 
 		expect(toast_visible).toBe(true);
+
+		// wait 2 seconds, scroll toast into view and take a screenshot
+		await page.waitForTimeout(2000);
+		await toast.scrollIntoViewIfNeeded();
+		await page.screenshot({ path: 'tests/screenshots/input-success.png' });
+	});
+
+	test('helper error messages should appear when input is invalid', async ({ page }) => {
+		// invalid inputs
+		await page.locator('//input[@id="email"]').fill('test-email@gmail.');
+		await page.locator('//input[@id="cpf"]').fill('123456789');
+		await page.locator('//input[@id="birthDate"]').fill('1234');
+		await page.locator('//input[@id="password"]').fill('test');
+
+		// search error messages
+		const errors_xpath = '//label//small';
+		const errors = page.locator(errors_xpath);
+		const errors_count = await errors.count();
+
+		for (let i = 0; i < errors_count; i++) {
+			const errorVisible = await errors.nth(i).isVisible();
+			expect(errorVisible).toBe(true);
+		}
+
+		await page.screenshot({ path: 'tests/screenshots/input-error.png' });
 	});
 });

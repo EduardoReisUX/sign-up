@@ -141,7 +141,7 @@
 		<button
 			id="togglePassword"
 			type="button"
-			class="absolute flex items-center inset-y-14 right-0 pr-2"
+			class="absolute w-6 h-6 flex items-center inset-y-11 right-0 mr-2"
 			on:click={togglePassword}
 		>
 			<img
