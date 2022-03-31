@@ -1,7 +1,18 @@
 <script lang="ts">
+	import eye_open from './../../static/eye_open.svg';
+
 	export let type: 'email' | 'cpf' | 'birthDate' | 'password' | 'checkbox';
 	export let value = '';
 	export let checked = false;
+
+	let isPasswordVisible = false;
+
+	const togglePassword = () => {
+		isPasswordVisible = !isPasswordVisible;
+
+		//@ts-ignore
+		document.querySelector('#password').type = isPasswordVisible ? 'text' : 'password';
+	};
 
 	const formatValues = (node: HTMLInputElement, formatFunction: (value: string) => string) => {
 		// Thank you very much, random svelte dev!
@@ -22,7 +33,7 @@
 		};
 	};
 
-	const FormattedCPF = (value: string) => {
+	const formatCPF = (value: string) => {
 		const regex = /^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/g;
 		const onlyNumbers = value.replace(/[^\d]/g, '');
 
@@ -35,7 +46,7 @@
 		);
 	};
 
-	const FormattedDate = (value: string) => {
+	const formatDate = (value: string) => {
 		const regex = /^(\d{0,2})(\d{0,2})(\d{0,4})$/g;
 		const onlyNumbers = value.replace(/[^\d]/g, '');
 
@@ -48,7 +59,7 @@
 
 	$: inputStyle = `peer border border-brand-white-two rounded-sm p-4 text-brand-black 
 		placeholder:text-brand-pinkish-grey
-		focus:outline-none focus:border-brand-dodger-blue focus:ring-1 focus:ring-brandborder-brand-dodger-blue
+		focus:outline-none focus:border-brand-dodger-blue focus:ring-1 focus:ring-brand
 		${
 			!!value &&
 			'invalid:border-brand-coral-pink focus:invalid:border-brand-coral-pink focus:invalid:ring-brand-coral-pink'
@@ -70,7 +81,7 @@
 			bind:value
 			required
 		/>
-		<small class={errorStyle}>O endereço de email deve ser válido.</small>
+		<small class={errorStyle}>Por favor insira um email válido.</small>
 	</label>
 {/if}
 
@@ -87,9 +98,9 @@
 			required
 			maxlength="14"
 			pattern={'.{14}'}
-			use:formatValues={FormattedCPF}
+			use:formatValues={formatCPF}
 		/>
-		<small class={errorStyle}>CPF deve conter 14 números</small>
+		<small class={errorStyle}>CPF deve conter 9 dígitos</small>
 	</label>
 {/if}
 
@@ -106,17 +117,17 @@
 			required
 			maxlength="10"
 			pattern={'.{10}'}
-			use:formatValues={FormattedDate}
+			use:formatValues={formatDate}
 		/>
 		<small class={errorStyle}>Data de nascimento deve conter 8 dígitos</small>
 	</label>
 {/if}
 
 {#if type === 'password'}
-	<label for="password" class={labelStyle}>
+	<label for="password" class={labelStyle + ' relative'}>
 		Senha
 		<input
-			class={inputStyle}
+			class={inputStyle + ' pr-10'}
 			type="password"
 			name="password"
 			id="password"
@@ -127,7 +138,18 @@
 			maxlength="40"
 		/>
 		<small class={errorStyle}>Senha deve ter entre 6 e 40 caracteres</small>
-		<!-- <img src={eye_open} alt="Ver senha" /> -->
+		<button
+			id="togglePassword"
+			type="button"
+			class="absolute flex items-center inset-y-14 right-0 pr-2"
+			on:click={togglePassword}
+		>
+			<img
+				src={eye_open}
+				alt={isPasswordVisible ? 'Ver senha' : 'Esconder senha'}
+				class="w-6 h-6"
+			/>
+		</button>
 	</label>
 {/if}
 
