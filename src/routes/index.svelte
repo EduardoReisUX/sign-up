@@ -23,28 +23,30 @@
 		terms: false
 	};
 
-	let loading = false;
-	let showToast = false;
+	let isLoading = false;
+	let show = false;
 
-	const handleSubmit = () => {
-		loading = true;
-
-		const data = { ...inputValues };
-
-		data.cpf = data.cpf.replace(/[\.|-]/g, '');
-		data.date = data.date.replace(/[/]/g, '');
+	function showToast(interval: number) {
+		show = true;
 
 		setTimeout(() => {
-			loading = false;
+			show = false;
+		}, interval);
+	}
 
-			setTimeout(() => {
-				showToast = true;
-				console.log(data); // send data to some database
+	const handleSubmit = () => {
+		isLoading = true;
 
-				setTimeout(() => {
-					showToast = false;
-				}, 5000); // show toast for 4 seconds
-			}, 400);
+		const formattedData = { ...inputValues };
+
+		formattedData.cpf = formattedData.cpf.replace(/[\.|-]/g, '');
+		formattedData.date = formattedData.date.replace(/[/]/g, '');
+
+		setTimeout(() => {
+			isLoading = false;
+
+			showToast(5000);
+			console.log(formattedData); // send data to some database
 		}, 1000); // 1 second of loading spinner
 	};
 </script>
@@ -61,13 +63,13 @@
 	</LeftWrapper>
 
 	<RightWrapper>
-		<Toast {showToast} />
+		<Toast showToast={show} />
 
 		<Container>
 			<Header />
 			<Main>
 				<Title />
-				<Form {loading} terms={inputValues.terms} {handleSubmit}>
+				<Form loading={isLoading} terms={inputValues.terms} {handleSubmit}>
 					<Input type="email" bind:value={inputValues.email} />
 					<Input type="cpf" bind:value={inputValues.cpf} />
 					<Input type="birthDate" bind:value={inputValues.date} />
