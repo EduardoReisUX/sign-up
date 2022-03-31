@@ -1,40 +1,86 @@
-# create-svelte
+<h1 align="center">
+  <img src="github/logo.svg" alt="logo" width="300px"></img>
+</h1>
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+<p align="center">
+  <a href="#ℹ-descrição">Descrição</a> •
+  <a href="#-tecnologias">Tecnologias</a> •
+  <a href="#-pré-requisitos">Pré-requisitos</a> •
+  <a href="#-como-usar">Como usar</a> <!-- •
+  <a href="#-demonstração">Demonstração</a> -->
+</p>
 
-## Creating a project
+<p align="center">
+  <img src="github/desktop.png" alt="Projeto no desktop" width="100%"></img>
+</p>
 
-If you're seeing this, you've probably already done this step. Congrats!
+<p align="center">
+  <img src="https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00" alt="Svelte" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" />
+</p>
+
+## ℹ Descrição
+
+Projeto desenvolvido como [desafio da Bcredi para função de Dev front-end](https://github.com/bcredi/bcredi-frontend-challenge). 👨‍🚀🚀
+
+O desafio consistia em codificar uma interface de login conforme o
+design do _Zeplin_, sendo que os requisitos obrigatórios são:
+
+- Design responsivo e cross-browser (IE10+, Chrome, Safari e Firefox);
+- Pelo menos uma estratégia para organização do CSS;
+- Validações no formulário;
+  - Campos obrigatórios;
+  - Formatos; e
+- Testes
+
+## ⚒ Tecnologias
+
+- [**Svelte**](https://svelte.dev)
+- [**Typescript**](https://www.typescriptlang.org)
+- [**SvelteKit**](https://kit.svelte.dev)
+- [**TailwindCSS**](https://tailwindcss.com)
+- [**Playwright**](https://playwright.dev)
+
+## ⚙ Pré-requisitos
+
+- [Git](https://git-scm.com)
+- [Yarn](https://yarnpkg.com)
+- Editor de código.
+
+## 🖥 Como usar
+
+**Clone o projeto e acesse a pasta**
 
 ```bash
-# create a new project in the current directory
-npm init svelte@next
-
-# create a new project in my-app
-npm init svelte@next my-app
+$ git clone https://github.com/EduardoReisUX/sign-up.git && cd sign-up
 ```
 
-> Note: the `@next` is temporary
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+**Siga os passos seguintes**
 
 ```bash
-npm run dev
+# Instale as dependências
+$ yarn
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+# Verifique os testes
+# 🚧 Atenção, esse comando pode não funcionar pois
+#       a integração de Playwright com SvelteKit é super recente.
+#       Veja mais: https://github.com/microsoft/playwright/issues/12487
+$ yarn test:e2e
+
+# Inicie a aplicação na sua máquina
+$ yarn dev
+
+# Faça o build e o visualize
+$ yarn build && yarn preview
 ```
 
-## Building
+<!-- ## 👀 Demonstração
 
-To create a production version of your app:
+<p align="center">
+  <img src="github/demo.gif" alt="Demonstração do projeto"></img>
+</p> -->
 
-```bash
-npm run build
-```
+---
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+<p align="center">Feito com 💜 por <a href="https://github.com/EduardoReisUX">Eduardo dos Reis</a></p>
