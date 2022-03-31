@@ -1,5 +1,7 @@
 <script lang="ts">
 	import '../app.css';
+	import { tweened } from 'svelte/motion';
+	import { cubicInOut } from 'svelte/easing';
 
 	import Header from '$lib/Header.svelte';
 	import Footer from '$lib/Footer.svelte';
@@ -14,6 +16,7 @@
 	import Input from '$lib/Input.svelte';
 	import Container from '$lib/Container.svelte';
 	import Toast from '$lib/Toast.svelte';
+	import Progress from '$lib/Progress.svelte';
 
 	let inputValues = {
 		email: '',
@@ -26,6 +29,11 @@
 	let isLoading = false;
 	let show = false;
 
+	$: progress = tweened(0, {
+		duration: 1500,
+		easing: cubicInOut
+	});
+
 	function showToast(interval: number) {
 		show = true;
 
@@ -36,6 +44,7 @@
 
 	const handleSubmit = () => {
 		isLoading = true;
+		progress.set(100);
 
 		const formattedData = { ...inputValues };
 
@@ -44,10 +53,11 @@
 
 		setTimeout(() => {
 			isLoading = false;
+			progress.set(0, { delay: 600 });
 
 			showToast(5000);
-			console.log(formattedData); // send data to some database
-		}, 1000); // 1 second of loading spinner
+			console.log(formattedData); // send formatted data to some database
+		}, 1500); // 1.5 seconds of loading spinner
 	};
 </script>
 
@@ -64,6 +74,7 @@
 
 	<RightWrapper>
 		<Toast showToast={show} />
+		<Progress {progress} />
 
 		<Container>
 			<Header />
