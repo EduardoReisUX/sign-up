@@ -3,20 +3,20 @@
 	import { tweened } from 'svelte/motion';
 	import { cubicInOut } from 'svelte/easing';
 
-	import Header from '$lib/Header.svelte';
-	import Footer from '$lib/Footer.svelte';
-	import Form from '$lib/Form.svelte';
-	import Main from '$lib/Main.svelte';
-	import Title from '$lib/Title.svelte';
-	import RightWrapper from '$lib/RightWrapper.svelte';
-	import Quote from '$lib/Quote.svelte';
-	import Picture from '$lib/Picture.svelte';
-	import LeftWrapper from '$lib/LeftWrapper.svelte';
-	import Page from '$lib/Page.svelte';
-	import Input from '$lib/Input.svelte';
-	import Container from '$lib/Container.svelte';
-	import Toast from '$lib/Toast.svelte';
-	import Progress from '$lib/Progress.svelte';
+	import Header from '$root/components/Header.svelte';
+	import Footer from '$root/components/Footer.svelte';
+	import Form from '$root/components/Form.svelte';
+	import Main from '$root/components/Main.svelte';
+	import Title from '$root/components/Title.svelte';
+	import RightWrapper from '$root/components/RightWrapper.svelte';
+	import Quote from '$root/components/Quote.svelte';
+	import Picture from '$root/components/Picture.svelte';
+	import LeftWrapper from '$root/components/LeftWrapper.svelte';
+	import Page from '$root/components/Page.svelte';
+	import Input from '$root/components/Input.svelte';
+	import Container from '$root/components/Container.svelte';
+	import Toast from '$root/components/Toast.svelte';
+	import Progress from '$root/components/Progress.svelte';
 
 	let inputValues = {
 		email: '',
