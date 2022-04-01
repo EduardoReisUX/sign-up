@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { formatCPF, formatDate, formatValues } from '$root/lib';
+
 	import eye_open from './../../static/eye_open.svg';
 
 	export let type: 'email' | 'cpf' | 'birthDate' | 'password' | 'checkbox';
@@ -12,47 +14,6 @@
 
 		//@ts-ignore
 		document.querySelector('#password').type = isPasswordVisible ? 'text' : 'password';
-	};
-
-	const formatValues = (node: HTMLInputElement, formatFunction: (value: string) => string) => {
-		// Thank you very much, random svelte dev!
-		// https://svelte.dev/repl/5c1abf5d24c94960a267124662e11a8d?version=3.44.2
-
-		function updateValue(e) {
-			node.value = formatFunction(node.value);
-		}
-
-		node.addEventListener('input', updateValue);
-		node.addEventListener('paste', updateValue);
-
-		return {
-			destroy() {
-				node.removeEventListener('input', updateValue);
-				node.removeEventListener('paste', updateValue);
-			}
-		};
-	};
-
-	const formatCPF = (value: string) => {
-		const regex = /^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/g;
-		const onlyNumbers = value.replace(/[^\d]/g, '');
-
-		if (onlyNumbers.length > 9) {
-			return onlyNumbers.replace(regex, '$1.$2.$3-$4');
-		}
-
-		return onlyNumbers.replace(regex, (regex, $1, $2, $3, $4) =>
-			[$1, $2, $3, $4].filter((group) => !!group).join('.')
-		);
-	};
-
-	const formatDate = (value: string) => {
-		const regex = /^(\d{0,2})(\d{0,2})(\d{0,4})$/g;
-		const onlyNumbers = value.replace(/[^\d]/g, '');
-
-		return onlyNumbers.replace(regex, (regex, $1, $2, $3) =>
-			[$1, $2, $3].filter((group) => !!group).join('/')
-		);
 	};
 
 	let labelStyle = 'flex flex-col gap-2 text-brand-warm-grey text-sm';
